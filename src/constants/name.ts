@@ -1,0 +1,14 @@
+export const CARD_COUNT = "cardCount";
+export const CODE = "code";
+export const COLOR_OVERLAY = "colorOverlay";
+export const DOWN = "down";
+export const IS_GRAY = "isGray";
+export const LEFT = "left";
+export const NAME = "name";
+export const PLAYER_COUNT = "playerCount";
+export const PLAYER_NAMES = "playerNames";
+export const RIGHT = "right";
+export const ROTATION = "rotation";
+export const SCALE = "scale";
+export const UP = "up";
+export const YEAR = "year";
