@@ -23,7 +23,11 @@ export default function Assignment2() {
 
   const goToStep = (next: number) => {
     if (step === 1 && next > step) {
-      handleGameState(PLAYER_NAMES, Array(gameState[PLAYER_COUNT]).fill(""));
+      const playerNameList = Array(gameState[PLAYER_COUNT])
+        .fill("")
+        .map((el, i) => `Player ${i + 1}`);
+
+      handleGameState(PLAYER_NAMES, playerNameList);
     }
     if (step === 2 && next > step) {
       handleGameState(CARD_COUNT, 1);

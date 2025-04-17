@@ -1,3 +1,4 @@
+import ImageWithSkeleton from "@/components/commons/ImageWithSkeleton";
 import { TableSkeleton } from "@/components/commons/TableSkeleton";
 import CanvasModal from "@/components/parts/CanvasModal";
 import { DATA_LOAD_ERROR_MESSAGE, EMPTY_DATA_MESSAGE } from "@/constants";
@@ -7,7 +8,6 @@ import { useToggle } from "@/hooks/useToggle";
 import { StyledAssignmentWrapper } from "@/styles/commons";
 import { ImageData } from "@/types/interfaces/data";
 import styled from "@emotion/styled";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Assignment1() {
@@ -58,11 +58,11 @@ export default function Assignment1() {
                 <tr key={img.id} onClick={onClickRow(img.download_url)}>
                   <td>{index + 1}</td>
                   <td>
-                    <Image
-                      alt={"이미지"}
+                    <ImageWithSkeleton
                       src={img.download_url}
                       width={150}
                       height={100}
+                      alt="썸네일 이미지"
                     />
                   </td>
                   <td>{img.author}</td>

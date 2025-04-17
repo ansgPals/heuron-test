@@ -1,3 +1,4 @@
+import { skeletonAnimation } from "@/styles/animations";
 import { SkeletonConfigsType } from "@/types/types/components";
 import styled from "@emotion/styled";
 
@@ -23,15 +24,5 @@ const SkeletonBox = styled.div`
   animation: skeleton-loading 1.2s ease-in-out infinite;
   margin: 0 auto;
 
-  @keyframes skeleton-loading {
-    0% {
-      background-color: ${(props) => props.theme.colors.line100};
-    }
-    50% {
-      background-color: ${(props) => props.theme.colors.grey100};
-    }
-    100% {
-      background-color: ${(props) => props.theme.colors.line100};
-    }
-  }
+  ${skeletonAnimation}
 `;
