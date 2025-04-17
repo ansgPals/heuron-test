@@ -1,12 +1,12 @@
-export interface Player {
+export type PlayerType = {
   name: string;
   cards: number[];
   score: number;
-}
+};
 
-export interface GameState {
+export type GameStateType = {
   playerCount: number;
   playerNames: string[];
   cardCount: number;
   [key: string]: number | string[];
-}
+};

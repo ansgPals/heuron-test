@@ -1,12 +1,10 @@
+import { TableSkeleton } from "@/components/commons/TableSkeleton";
 import CanvasModal from "@/components/parts/CanvasModal";
-import {
-  DATA_LOAD_ERROR_MESSAGE,
-  DATA_LOAD_MESSAGE,
-  EMPTY_DATA_MESSAGE,
-} from "@/constants";
+import { DATA_LOAD_ERROR_MESSAGE, EMPTY_DATA_MESSAGE } from "@/constants";
 import { IMAGE_LIST_API_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/useFetch";
 import { useToggle } from "@/hooks/useToggle";
+import { StyledAssignmentWrapper } from "@/styles/commons";
 import { ImageData } from "@/types/interfaces/data";
 import styled from "@emotion/styled";
 import Image from "next/image";
@@ -26,40 +24,62 @@ export default function Assignment1() {
     setIsModalOpen();
   };
 
-  if (isLoading) return <StyledInfo>{DATA_LOAD_MESSAGE}</StyledInfo>;
-  if (error)
+  if (error || (!isLoading && !data?.length))
     return (
-      <StyledInfo>
-        {DATA_LOAD_ERROR_MESSAGE}
-        {error}
-      </StyledInfo>
+      <StyledAssignmentWrapper>
+        <h1>이미지 목록</h1>
+        <StyledInfo>
+          {error ? `${DATA_LOAD_ERROR_MESSAGE} ${error}` : EMPTY_DATA_MESSAGE}
+        </StyledInfo>
+      </StyledAssignmentWrapper>
     );
-  if (!data?.length) return <StyledInfo>{EMPTY_DATA_MESSAGE}</StyledInfo>;
 
   return (
-    <StyledAssignment1>
+    <StyledAssignmentWrapper>
       <h1>이미지 목록</h1>
       <Table>
+        <colgroup>
+          <col width={40} />
+          <col width={150} />
+          <col width={150} />
+          <col width={150} />
+        </colgroup>
         <thead>
           <tr>
             <th>No</th>
             <th>썸네일</th>
+            <th>작가명</th>
+            <th>id</th>
           </tr>
         </thead>
         <tbody>
-          {data?.map((img, index) => (
-            <tr key={img.id} onClick={onClickRow(img.download_url)}>
-              <td>{index + 1}</td>
-              <td>
-                <Image
-                  alt={"이미지"}
-                  src={img.download_url}
-                  width={150}
-                  height={100}
+          {!isLoading
+            ? data?.map((img, index) => (
+                <tr key={img.id} onClick={onClickRow(img.download_url)}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <Image
+                      alt={"이미지"}
+                      src={img.download_url}
+                      width={150}
+                      height={100}
+                    />
+                  </td>
+                  <td>{img.author}</td>
+                  <td>{img.id}</td>
+                </tr>
+              ))
+            : Array.from({ length: 10 }).map((_, idx) => (
+                <TableSkeleton
+                  configs={[
+                    { width: "4rem", height: "2rem" },
+                    { width: "15rem", height: "10rem" },
+                    { width: "15rem", height: "2rem" },
+                    { width: "15rem", height: "2rem" },
+                  ]}
+                  key={idx}
                 />
-              </td>
-            </tr>
-          ))}
+              ))}
         </tbody>
       </Table>
       <CanvasModal
@@ -67,13 +87,9 @@ export default function Assignment1() {
         handleClose={setIsModalOpen}
         imageSrc={selectedImageSrc}
       />
-    </StyledAssignment1>
+    </StyledAssignmentWrapper>
   );
 }
-
-const StyledAssignment1 = styled.div`
-  padding: 3rem;
-`;
 
 const Table = styled.table`
   width: 100%;
@@ -84,7 +100,7 @@ const Table = styled.table`
   td {
     padding: 1.2rem;
     border-top: 0.1rem solid ${(props) => props.theme.colors.line100};
-    text-align: left;
+    text-align: center;
   }
   tbody > tr {
     cursor: pointer;

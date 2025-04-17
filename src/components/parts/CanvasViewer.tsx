@@ -1,14 +1,8 @@
 import ColorPicker from "@/components/commons/ColorPicker";
 import ToggleButton from "@/components/commons/Toggle";
 import { IMAGE_LOAD_ERROR_MESSAGE, IMAGE_LOAD_MESSAGE } from "@/constants";
-import {
-  COLOR_OVERLAY,
-  DOWN,
-  IS_GRAY,
-  ROTATION,
-  SCALE,
-  UP,
-} from "@/constants/name";
+import { COLOR_OVERLAY, DOWN, ROTATION, SCALE, UP } from "@/constants/name";
+import { useToggle } from "@/hooks";
 import { useObjectState } from "@/hooks/useObjectState";
 import { StyledOutlineButton } from "@/styles/commons";
 import { MouseButton } from "@/types/enums/commons";
@@ -21,10 +15,10 @@ export default function CanvasViewer({ src }: CanvasViewerProps) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const [isGrayState, handleIsGray] = useToggle(false);
   const [canvasState, handleCanvasState, resetCanvasState] = useObjectState({
     [SCALE]: 1,
     [ROTATION]: 0,
-    [IS_GRAY]: false,
     [COLOR_OVERLAY]: "#ffffff",
   });
 
@@ -56,7 +50,7 @@ export default function CanvasViewer({ src }: CanvasViewerProps) {
     const drawX = -image.width / 2;
     const drawY = -image.height / 2;
 
-    ctx.filter = canvasState[IS_GRAY] ? "grayscale(100%)" : "none";
+    ctx.filter = isGrayState ? "grayscale(100%)" : "none";
     ctx.drawImage(image, drawX, drawY);
     ctx.globalCompositeOperation = "multiply";
     ctx.fillStyle = canvasState[COLOR_OVERLAY];
@@ -109,13 +103,13 @@ export default function CanvasViewer({ src }: CanvasViewerProps) {
       setLoading(false);
       setError(true);
     };
-  }, [src]);
+  }, [src, canvasRef]);
 
   useEffect(() => {
     if (imageRef.current) {
       drawImageOnCanvas(imageRef.current);
     }
-  }, [canvasState]);
+  }, [canvasState, isGrayState, imageRef]);
 
   return (
     <StyledCanvasViewer isBlocked={isLoading || error}>
@@ -137,8 +131,8 @@ export default function CanvasViewer({ src }: CanvasViewerProps) {
           handleChange={(value) => handleCanvasState(COLOR_OVERLAY, value)}
         />
         <ToggleButton
-          value={canvasState[IS_GRAY]}
-          handleChange={() => handleCanvasState(IS_GRAY, !canvasState[IS_GRAY])}
+          value={isGrayState}
+          handleChange={handleIsGray}
           label="흑백모드"
         />
         <StyledOutlineButton onClick={resetCanvasState}>

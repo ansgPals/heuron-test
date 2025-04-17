@@ -2,7 +2,6 @@ export const CARD_COUNT = "cardCount";
 export const CODE = "code";
 export const COLOR_OVERLAY = "colorOverlay";
 export const DOWN = "down";
-export const IS_GRAY = "isGray";
 export const LEFT = "left";
 export const NAME = "name";
 export const PLAYER_COUNT = "playerCount";

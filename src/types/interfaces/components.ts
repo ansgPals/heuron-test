@@ -1,3 +1,5 @@
+import { PlayerType } from "../types/pages";
+
 export interface CanvasViewerProps {
   src: string;
 }
@@ -25,7 +27,11 @@ export interface CardStep3Props {
   handleCardCount: (value: number) => void;
   startGame: () => void;
 }
-
+export interface CardStep4Props {
+  winner: PlayerType;
+  players: PlayerType[];
+  handleRestart: () => void;
+}
 export interface ColorPickerProps {
   label?: string;
   value: string;

@@ -45,7 +45,7 @@ export const useFetch = <T>(props: UseApiOptions) => {
     if (immediate) {
       fetchData();
     }
-  }, [url]);
+  }, [url, immediate]);
 
   return {
     data,

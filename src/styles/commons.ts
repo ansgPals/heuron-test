@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+export const StyledAssignmentWrapper = styled.div`
+  padding: 3rem;
+`;
+
 export const StyledButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;

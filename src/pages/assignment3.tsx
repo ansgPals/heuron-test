@@ -2,6 +2,7 @@ import { CODE, NAME, YEAR } from "@/constants";
 import { dummyData } from "@/dummyData";
 import { useObjectState } from "@/hooks";
 import { useSearches } from "@/hooks/useSearches";
+import { StyledAssignmentWrapper } from "@/styles/commons";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import { useMemo } from "react";
@@ -23,7 +24,7 @@ export default function Assignment3() {
       _.debounce((key: string, value: string) => {
         handleSearchKeywords(key, value);
       }, 300),
-    []
+    [handleSearchKeywords]
   );
 
   const onChangeSearchKeyword = (key: string, value: string) => {
@@ -42,7 +43,7 @@ export default function Assignment3() {
   };
 
   return (
-    <StyledAssignment3>
+    <StyledAssignmentWrapper>
       <h1>필터링</h1>
       <StyledInputs>
         {columns.map((column) => (
@@ -74,12 +75,9 @@ export default function Assignment3() {
           ))}
         </tbody>
       </Table>
-    </StyledAssignment3>
+    </StyledAssignmentWrapper>
   );
 }
-const StyledAssignment3 = styled.div`
-  padding: 3rem;
-`;
 
 const StyledInputs = styled.div`
   display: flex;
