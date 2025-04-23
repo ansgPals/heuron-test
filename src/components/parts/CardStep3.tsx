@@ -8,7 +8,7 @@ import {
 import { CardStep3Props } from "@/types/interfaces/components";
 
 export default function CardStep3(props: CardStep3Props) {
-  const { handleStep, startGame, cardCount, handleCardCount } = props;
+  const { handleNext, handlePrev, cardCount, handleCardCount } = props;
 
   const isCardCountValid = cardCount >= 1 && cardCount <= 10;
 
@@ -30,10 +30,8 @@ export default function CardStep3(props: CardStep3Props) {
         <StyledErrorMsg>{"1~10장 사이로 입력해주세요."}</StyledErrorMsg>
       )}
       <StyledButtonWrapper>
-        <StyledOutlineButton onClick={() => handleStep(2)}>
-          이전
-        </StyledOutlineButton>
-        <StyledOutlineButton onClick={startGame} disabled={!isCardCountValid}>
+        <StyledOutlineButton onClick={handlePrev}>이전</StyledOutlineButton>
+        <StyledOutlineButton onClick={handleNext} disabled={!isCardCountValid}>
           시작
         </StyledOutlineButton>
       </StyledButtonWrapper>
