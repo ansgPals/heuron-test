@@ -13,19 +13,20 @@ export interface CanvasModalProps {
 export interface CardStep1Props {
   playerCount: number;
   setPlayerCount: (value: number) => void;
-  handleStep: (step: number) => void;
+  handleNext: () => void;
 }
 export interface CardStep2Props {
-  handleStep: (step: number) => void;
   playerNames: string[];
   handlePlayerNames: (value: string[]) => void;
+  handleNext: () => void;
+  handlePrev: () => void;
 }
 
 export interface CardStep3Props {
-  handleStep: (step: number) => void;
   cardCount: number;
   handleCardCount: (value: number) => void;
-  startGame: () => void;
+  handleNext: () => void;
+  handlePrev: () => void;
 }
 export interface CardStep4Props {
   winner: PlayerType;

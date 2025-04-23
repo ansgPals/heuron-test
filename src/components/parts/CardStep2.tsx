@@ -8,7 +8,7 @@ import {
 import { CardStep2Props } from "@/types/interfaces/components";
 
 export default function CardStep2(props: CardStep2Props) {
-  const { handleStep, playerNames, handlePlayerNames } = props;
+  const { handleNext, handlePrev, playerNames, handlePlayerNames } = props;
 
   const isDuplicate =
     new Set(playerNames.map((name) => name.trim())).size !== playerNames.length;
@@ -43,13 +43,8 @@ export default function CardStep2(props: CardStep2Props) {
         ))}
 
       <StyledButtonWrapper>
-        <StyledOutlineButton onClick={() => handleStep(1)}>
-          이전
-        </StyledOutlineButton>
-        <StyledOutlineButton
-          onClick={() => handleStep(3)}
-          disabled={!isNameValid}
-        >
+        <StyledOutlineButton onClick={handlePrev}>이전</StyledOutlineButton>
+        <StyledOutlineButton onClick={handleNext} disabled={!isNameValid}>
           다음
         </StyledOutlineButton>
       </StyledButtonWrapper>

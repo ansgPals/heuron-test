@@ -1,4 +1,3 @@
-import { CODE, NAME, YEAR } from "@/constants";
 import { dummyData } from "@/dummyData";
 import { useObjectState } from "@/hooks";
 import { useSearches } from "@/hooks/useSearches";
@@ -7,15 +6,13 @@ import styled from "@emotion/styled";
 import _ from "lodash";
 import { useMemo } from "react";
 export default function Assignment3() {
-  const [searchKeywords, handleSearchKeywords] = useObjectState<
-    Record<string, string>
-  >({
-    [NAME]: "",
-    [YEAR]: "",
-    [CODE]: "",
-  });
+  const columns = Object.keys(dummyData[0]);
+  const initialKeywordState = Object.fromEntries(
+    columns.map((key) => [key, ""])
+  );
 
-  const columns = [NAME, YEAR, CODE];
+  const [searchKeywords, handleSearchKeywords] =
+    useObjectState(initialKeywordState);
 
   const { filteredData } = useSearches(dummyData, searchKeywords);
 
