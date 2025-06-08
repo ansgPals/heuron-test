@@ -21,23 +21,6 @@ export default function Assignment2() {
       [CARD_COUNT]: 1,
     });
 
-  const goToStep = (next: number) => {
-    if (step === 1 && next > step) {
-      const playerNameList = Array(gameState[PLAYER_COUNT])
-        .fill("")
-        .map((el, i) => `Player ${i + 1}`);
-
-      handleGameState(PLAYER_NAMES, playerNameList);
-    }
-    if (step === 2 && next > step) {
-      handleGameState(CARD_COUNT, 1);
-    }
-    if (step === 3 && next > step) {
-      setWinner(null);
-    }
-    setStep(next);
-  };
-
   const generateCards = (count: number) => {
     const cards = [];
     for (let i = 0; i < count; i++) {
@@ -76,24 +59,35 @@ export default function Assignment2() {
           setPlayerCount={(value: number) =>
             handleGameState(PLAYER_COUNT, value)
           }
-          handleStep={goToStep}
+          handleNext={() => {
+            const playerNameList = Array(gameState[PLAYER_COUNT])
+              .fill("")
+              .map((el, i) => `Player ${i + 1}`);
+
+            handleGameState(PLAYER_NAMES, playerNameList);
+            setStep(2);
+          }}
         />
       )}
 
       {step === 2 && (
         <CardStep2
-          handleStep={goToStep}
           handlePlayerNames={(value) => handleGameState(PLAYER_NAMES, value)}
           playerNames={gameState[PLAYER_NAMES]}
+          handleNext={() => {
+            handleGameState(CARD_COUNT, 1);
+            setStep(3);
+          }}
+          handlePrev={() => setStep(1)}
         />
       )}
 
       {step === 3 && (
         <CardStep3
-          handleStep={goToStep}
           cardCount={gameState[CARD_COUNT]}
-          startGame={startGame}
           handleCardCount={(value) => handleGameState(CARD_COUNT, value)}
+          handleNext={startGame}
+          handlePrev={() => setStep(2)}
         />
       )}
 
@@ -102,8 +96,9 @@ export default function Assignment2() {
           winner={winner}
           players={players}
           handleRestart={() => {
-            goToStep(1);
+            setStep(1);
             resetGameState();
+            setWinner(null);
           }}
         />
       )}

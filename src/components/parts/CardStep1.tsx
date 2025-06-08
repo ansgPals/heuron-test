@@ -8,7 +8,7 @@ import {
 import { CardStep1Props } from "@/types/interfaces/components";
 
 export default function CardStep1(props: CardStep1Props) {
-  const { playerCount, setPlayerCount, handleStep } = props;
+  const { playerCount, setPlayerCount, handleNext } = props;
 
   const isPlayerCountValid = playerCount >= 2 && playerCount <= 15;
   return (
@@ -30,7 +30,7 @@ export default function CardStep1(props: CardStep1Props) {
       )}
       <StyledButtonWrapper>
         <StyledOutlineButton
-          onClick={() => handleStep(2)}
+          onClick={handleNext}
           disabled={!isPlayerCountValid}
         >
           다음
